@@ -1,12 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import FilterByName from './FilterByName';
 
 function Datatable() {
-  const { planets } = useContext(PlanetsContext);
+  const { planets, filter } = useContext(PlanetsContext);
+  const [filterPlanets, setFilterPlanets] = useState([]);
+
+  useEffect(() => {
+    const { name } = filter.filterByName;
+    const searchedPlanets = planets.filter(
+      (planet) => planet.name.toLowerCase().includes(name),
+    );
+    setFilterPlanets(searchedPlanets);
+  }, [planets, filter]);
+
   return (
     <>
       <h1>Star Wars Planets Database</h1>
-
+      <FilterByName />
       <table>
         <thead>
           <tr>
@@ -26,7 +37,7 @@ function Datatable() {
           </tr>
         </thead>
         <tbody>
-          {planets.map((planet, index) => (
+          {filterPlanets.map((planet, index) => (
             <tr key={ index }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>

@@ -5,6 +5,7 @@ import getPlanetsDatabase from '../services/getPlanetsDatabase';
 
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filter, setFilter] = useState({ filterByName: { name: '' } });
 
   useEffect(() => {
     const getAPI = async () => {
@@ -15,7 +16,7 @@ function PlanetsProvider({ children }) {
   }, []);
 
   return (
-    <PlanetsContext.Provider value={ { planets } }>
+    <PlanetsContext.Provider value={ { planets, setPlanets, filter, setFilter } }>
       { children }
     </PlanetsContext.Provider>
   );
