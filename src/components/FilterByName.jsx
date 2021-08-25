@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-// import React from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function FilterByName() {

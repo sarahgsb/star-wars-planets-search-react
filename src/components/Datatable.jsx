@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import FilterByName from './FilterByName';
+import FilterByNumber from './FilterByNumber';
 
 function Datatable() {
   const { planets, filter } = useContext(PlanetsContext);
@@ -18,6 +19,7 @@ function Datatable() {
     <>
       <h1>Star Wars Planets Database</h1>
       <FilterByName />
+      <FilterByNumber />
       <table>
         <thead>
           <tr>

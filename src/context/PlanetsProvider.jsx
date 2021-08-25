@@ -6,6 +6,13 @@ import getPlanetsDatabase from '../services/getPlanetsDatabase';
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filter, setFilter] = useState({ filterByName: { name: '' } });
+  const [comparison, setComparison] = useState({ filterByNumericValues: [
+    {
+      column: '',
+      comparison: '',
+      value: '',
+    },
+  ] });
 
   useEffect(() => {
     const getAPI = async () => {
@@ -16,7 +23,14 @@ function PlanetsProvider({ children }) {
   }, []);
 
   return (
-    <PlanetsContext.Provider value={ { planets, setPlanets, filter, setFilter } }>
+    <PlanetsContext.Provider
+      value={ { planets,
+        setPlanets,
+        filter,
+        setFilter,
+        comparison,
+        setComparison } }
+    >
       { children }
     </PlanetsContext.Provider>
   );
