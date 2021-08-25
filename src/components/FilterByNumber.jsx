@@ -2,28 +2,29 @@ import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function FilterByNumber() {
-  const { comparison, setComparison } = useContext(PlanetsContext);
-  const [state, setState] = useState({
-    column: '',
-    comparison: '',
-    value: '',
-  });
+  const [select, setSelect] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+  const { filter, setFilter } = useContext(PlanetsContext);
+  const [comparison, handleComparison] = useState('maior que');
+  const [column, handleColumn] = useState('population');
+  const [value, handleValue] = useState('');
 
   const handleClick = () => {
-    setComparison({
-      ...comparison,
-      filterByNumericValues: [
-        ...comparison.filterByNumericValues,
-        state,
-      ],
-    });
-  };
-
-  const handleChange = ({ target }) => {
-    setState({
-      ...state,
-      [target.name]: target.value,
-    });
+    setFilter(
+      { ...filter,
+        filterByNumericValues: [{
+          column,
+          comparison,
+          value,
+        }] },
+    );
+    const columns = select.filter((item) => item !== column);
+    setSelect([...columns]);
   };
 
   return (
@@ -32,14 +33,11 @@ function FilterByNumber() {
         Filter by column:
         <select
           data-testid="column-filter"
-          name="column"
-          onChange={ handleChange }
+          onChange={ (event) => handleColumn(event.target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {select.map((option, index) => (
+            <option key={ index } value={ option }>{ option }</option>
+          ))}
         </select>
       </label>
 
@@ -47,8 +45,7 @@ function FilterByNumber() {
         Filter by number:
         <select
           data-testid="comparison-filter"
-          name="comparison"
-          onChange={ handleChange }
+          onChange={ (event) => handleComparison(event.target.value) }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -58,8 +55,7 @@ function FilterByNumber() {
       <input
         type="number"
         data-testid="value-filter"
-        name="value"
-        onChange={ handleChange }
+        onChange={ (event) => handleValue(event.target.value) }
       />
       <button
         type="button"

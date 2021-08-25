@@ -6,14 +6,38 @@ import FilterByNumber from './FilterByNumber';
 function Datatable() {
   const { planets, filter } = useContext(PlanetsContext);
   const [filterPlanets, setFilterPlanets] = useState([]);
+  const { filter: { filterByNumericValues } } = useContext(PlanetsContext);
+  const { name } = filter.filterByName;
 
   useEffect(() => {
-    const { name } = filter.filterByName;
-    const searchedPlanets = planets.filter(
-      (planet) => planet.name.toLowerCase().includes(name),
-    );
-    setFilterPlanets(searchedPlanets);
-  }, [planets, filter]);
+    const searchPlanets = () => {
+      if (filterByNumericValues[0]) {
+        const { column, comparison, value } = filterByNumericValues[0];
+        switch (comparison) {
+        case 'menor que':
+          return planets.filter((planet) => planet.name.toLowerCase()
+            .includes(name)
+            && parseInt(planet[column], 0) < parseInt(value, 0));
+        case 'maior que':
+          return planets.filter((planet) => planet.name.toLowerCase()
+            .includes(name)
+            && parseInt(planet[column], 0) > parseInt(value, 0));
+
+        case 'igual a':
+          return planets.filter(
+            (planet) => planet.name.toLowerCase()
+              .includes(name)
+            && parseInt(planet[column], 0) === parseInt(value, 0),
+          );
+        default:
+        }
+      }
+      return planets.filter(
+        (planet) => planet.name.toLowerCase().includes(name),
+      );
+    };
+    setFilterPlanets(searchPlanets());
+  }, [planets, filterByNumericValues, name]);
 
   return (
     <>
@@ -24,13 +48,13 @@ function Datatable() {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Rotation period</th>
-            <th>Orbital period</th>
+            <th>Rotation Period</th>
+            <th>Orbital Period</th>
             <th>Diameter</th>
             <th>Climate</th>
             <th>Gravity</th>
             <th>Terrain</th>
-            <th>Surface water</th>
+            <th>Surface Water</th>
             <th>Population</th>
             <th>Films</th>
             <th>Created</th>

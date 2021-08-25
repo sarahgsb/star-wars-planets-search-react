@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import Datatable from './components/Datatable';
 import PlanetsProvider from './context/PlanetsProvider';
+import Datatable from './components/Datatable';
 
 function App() {
   return (
