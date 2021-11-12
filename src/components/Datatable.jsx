@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+
 import PlanetsContext from '../context/PlanetsContext';
 import FilterByName from './FilterByName';
 import FilterByNumber from './FilterByNumber';
@@ -6,7 +7,9 @@ import FilterByNumber from './FilterByNumber';
 function Datatable() {
   const { planets, filter } = useContext(PlanetsContext);
   const [filterPlanets, setFilterPlanets] = useState([]);
-  const { filter: { filterByNumericValues } } = useContext(PlanetsContext);
+  const {
+    filter: { filterByNumericValues },
+  } = useContext(PlanetsContext);
   const { name } = filter.filterByName;
 
   useEffect(() => {
@@ -15,26 +18,25 @@ function Datatable() {
         const { column, comparison, value } = filterByNumericValues[0];
         switch (comparison) {
         case 'menor que':
-          return planets.filter((planet) => planet.name.toLowerCase()
-            .includes(name)
-            && parseInt(planet[column], 0) < parseInt(value, 0));
+          return planets.filter(
+            (planet) => planet.name.toLowerCase().includes(name)
+                && parseInt(planet[column], 0) < parseInt(value, 0),
+          );
         case 'maior que':
-          return planets.filter((planet) => planet.name.toLowerCase()
-            .includes(name)
-            && parseInt(planet[column], 0) > parseInt(value, 0));
+          return planets.filter(
+            (planet) => planet.name.toLowerCase().includes(name)
+                && parseInt(planet[column], 0) > parseInt(value, 0),
+          );
 
         case 'igual a':
           return planets.filter(
-            (planet) => planet.name.toLowerCase()
-              .includes(name)
-            && parseInt(planet[column], 0) === parseInt(value, 0),
+            (planet) => planet.name.toLowerCase().includes(name)
+                && parseInt(planet[column], 0) === parseInt(value, 0),
           );
         default:
         }
       }
-      return planets.filter(
-        (planet) => planet.name.toLowerCase().includes(name),
-      );
+      return planets.filter((planet) => planet.name.toLowerCase().includes(name));
     };
     setFilterPlanets(searchPlanets());
   }, [planets, filterByNumericValues, name]);

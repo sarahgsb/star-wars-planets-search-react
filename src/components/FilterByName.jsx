@@ -10,17 +10,18 @@ function FilterByName() {
   };
 
   return (
-    <label htmlFor="name-filter">
-      Search planet:
-      <input
-        type="text"
-        value={ name }
-        data-testid="name-filter"
-        placeholder="search here"
-        onChange={ handleChange }
-      />
-    </label>
-
+    <div className="form-center">
+      <label htmlFor="name-filter">
+        Search planet:
+        <input
+          type="text"
+          value={ name }
+          data-testid="name-filter"
+          placeholder="search here"
+          onChange={ handleChange }
+        />
+      </label>
+    </div>
   );
 }
 export default FilterByName;

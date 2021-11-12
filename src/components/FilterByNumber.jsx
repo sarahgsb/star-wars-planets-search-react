@@ -28,7 +28,7 @@ function FilterByNumber() {
   };
 
   return (
-    <div>
+    <div className="form">
       <label htmlFor="column-filter">
         Filter by column:
         <select
@@ -40,7 +40,6 @@ function FilterByNumber() {
           ))}
         </select>
       </label>
-
       <label htmlFor="comparison-filter">
         Filter by number:
         <select
